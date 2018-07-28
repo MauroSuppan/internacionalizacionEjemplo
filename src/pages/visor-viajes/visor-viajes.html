@@ -1,0 +1,88 @@
+<ion-header>
+
+  <ion-navbar color="dark">
+    <ion-title>{{ 'VISOR_VIAJES_PANEL_TITLE' | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="filtrarViajes()">
+      <ion-icon name="refresh"></ion-icon>
+      </button>
+    </ion-buttons>
+    
+  </ion-navbar>
+  <ion-list block>
+      <ion-item class="filtro">
+        <ion-label color="primary">Filtro:</ion-label>
+        <ion-select  interface="alert" cancelText="Cancelar" okText="Aceptar" [(ngModel)]="filtro" (ionChange)="filtrarViajes()">
+          <ion-option value="0">Pendientes</ion-option>
+          <ion-option value="-2">Post datados</ion-option>
+          <ion-option value="1">En viaje</ion-option>
+          <ion-option value="2">Finalizados</ion-option>
+          <ion-option value="3">Cancelados por cliente</ion-option>
+          <ion-option value="4">Cancelados por chofer</ion-option>
+          <ion-option value="5">Eliminados por supervisor</ion-option>
+          <ion-option value="-1">Todos</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+</ion-header>
+
+<ion-content class="visor-viajes-content" id="visor-viajes-content">
+  
+
+  <ion-card  padding *ngFor="let item of listaViajes" [ngClass]="item.activo==0? 'disabled' : 'enabled' ">
+
+    <ion-item style="text-align: center;">
+      <!-- <ion-avatar item-start>
+        <img [src]="item.foto === undefined ? '../../assets/img/img-usuario.svg' : item.foto">
+      </ion-avatar> -->
+      <ion-avatar item-start>
+          <button (click)="verImg(item.correoCliente)" ion-button color="dark"><ion-icon name="image"></ion-icon></button>
+      </ion-avatar>
+      <h2 style="color: #1420c9;">Cliente: {{ item.nombreCliente }}</h2>
+      <h2 style="color: #1420c9;">Duración: {{item.duracionViajeText}}</h2>
+      <p style="color: #1420c9;">Distancia: {{ item.distanciaText }}</p>
+    </ion-item>
+
+    <!-- <img class="imagen" [src]="item.foto"> -->
+
+    <ion-card-content (click)="verViaje(item)">
+      <p style="margin-top: 10px !important">Chofer:
+        <b>{{item.correoChofer}}</b>
+      </p>
+      <p>Origen:
+        <b>{{item.origen}}</b>
+      </p>
+      <p>Destino:
+        <b>{{item.destino}}</b>
+      </p>
+      <p>Salida:
+        <b>{{ item.fechaSalidaString }}</b>
+      </p>
+      <p>Pedido:
+        <b>{{ item.fechaRegistroString }}</b>
+      </p>
+      <p>Estado:
+       <!-- <b>{{   ( item.estado == 0 ? 'Pendiente' : (item.estado == 1 ? 'En viaje' : (item.estado == 2 ? 'Finalizado' : (item.estado == 3 ? 'Cancelado Cliente' : 'Cancelado Chofer/Supervisor' ) ) ) ) }}</b>-->
+        <b>{{   ( item.estado == 0 ? 'Pendiente' : (item.estado == 1 ? 'En viaje' : (item.estado == 2 ? 'Finalizado' : (item.estado == 3 ? 'Cancelado Cliente' :(item.estado == 4 ? 'Cancelado por Chofer' : 'Eliminado por supervisor') ) ) )) }}</b>
+      </p>
+      <p>Monto:
+        <b>$ {{ item.monto }}</b>
+      </p>
+      <p *ngIf = "item.estado == 0">
+        <b>
+          <button ion-button icon-only (click)="cancelarViaje(item)" class="submit-btn">
+          <ion-icon name="trash">Eliminar</ion-icon>
+          </button>
+        </b>
+      </p>
+      <p *ngIf = "item.estado == 0 && item.correoChofer != ''">
+        <b>
+          <button ion-button icon-only (click)="ponerViajeEnPendiente(item)" class="submit-btn">
+          <ion-icon name="md-close">Cancelar asignación</ion-icon>
+          </button>
+        </b>
+      </p>
+    </ion-card-content>
+
+  </ion-card>
+</ion-content>

@@ -1,0 +1,40 @@
+alta-chofer-page {
+    ion-content {
+        //background: rgb(56, 56, 56)!important;
+        background-color: #14830a!important;
+        
+    }
+
+    ion-item {
+        border-radius: 30px !important;
+        margin-top: 4px !important;
+        height: 46px !important;
+        background-color: #1b6415!important;
+        //background: transparent!important;
+        
+    }
+    .submit-btn {
+        background: #51CFB1;
+        //border-radius: 30px !important;
+        //border: 1px solid #ffffff;
+    }
+    .contenedor-global {
+        //background: url('../../assets/img/bg/5.jpg');
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%!important;
+        position: relative;
+        top: 0px;
+        left: 0px;
+    }
+
+    .marco-imagen {
+        text-align: center;
+        background-repeat: no-repeat;
+        background-size: contain;
+        height: 40px;
+        width: 40px;
+        border-radius: 10px;
+        margin-left: 14px;
+    }
+}
